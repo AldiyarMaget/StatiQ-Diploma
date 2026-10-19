@@ -1,0 +1,31 @@
+flowchart LR
+    %% Actors
+    AnalystActor(("Technical Integration<br/>Analyst"))
+    UserActor(("General Operational<br/>User"))
+    SystemAdminActor(("Platform Administrator /<br/>CI Ingestion Runner"))
+
+    %% Use Cases
+    subgraph UseCases ["StatIQ Platform Use Cases"]
+        UC1(["UC-01: Ingest OpenAPI Specification<br/>(Two-pass AST Parsing & Cycle Detection)"])
+        UC2(["UC-02: Ingest Regulatory Markdown<br/>(Two-tier Structural Ingestion)"])
+        UC3(["UC-03: Query Integration Contracts & Schemas<br/>(Analyst Persona)"])
+        UC4(["UC-04: Query Operational Guidelines & Procedures<br/>(User Persona)"])
+        UC5(["UC-05: Inspect Visual Workflow & State Diagram<br/>(Interactive Mermaid Rendering)"])
+        UC6(["UC-06: Verify Deterministic Source Citations<br/>(File, Section & Endpoint Provenance)"])
+    end
+
+    %% Actor to UC links
+    SystemAdminActor --> UC1
+    SystemAdminActor --> UC2
+
+    AnalystActor --> UC3
+    AnalystActor --> UC6
+
+    UserActor --> UC4
+    UserActor --> UC5
+    UserActor --> UC6
+
+    %% Include and Extend relationships
+    UC3 -.->|<<includes>>| UC6
+    UC4 -.->|<<includes>>| UC6
+    UC5 -.->|<<extends>>| UC4

@@ -1,0 +1,42 @@
+flowchart TB
+    subgraph Users ["Target Users & System Actors"]
+        Analyst["Integration & System Analyst<br/>(Technical Persona)"]
+        User["Business & Support Operator<br/>(Operational Persona)"]
+        Admin["Platform Administrator / CI Runner<br/>(Ingestion Pipeline Trigger)"]
+    end
+
+    subgraph ExternalSources ["Enterprise Knowledge Sources"]
+        OpenAPISpecs["OpenAPI 3.0 / Swagger Specs<br/>(JSON / YAML Contracts)"]
+        Regulations["Corporate Guidelines & Regulations<br/>(Markdown / Text Manuals)"]
+    end
+
+    subgraph StatIQSystem ["StatIQ Platform Boundary"]
+        StatIQ["StatIQ Core Knowledge Engine<br/>(Java 21 / Spring Boot 3.2.5)<br/>AST Ingestion | Hybrid RRF | Intent Routing"]
+    end
+
+    subgraph LLMProviders ["External Hosted LLM Providers"]
+        Gemini["Google Gemini Flash<br/>(Primary LLM via GenAI SDK)"]
+        Claude["Anthropic Claude 3.5 Sonnet<br/>(Fallback LLM via Messages API)"]
+    end
+
+    subgraph Storage ["Unified Persistent Storage"]
+        Postgres[("PostgreSQL 16 + pgvector<br/>Relational Metadata | tsvector | HNSW 384D")]
+    end
+
+    %% User Interactions
+    Analyst -->|"Queries schemas, parameters, endpoints<br/>(Analyst Mode / REST)"| StatIQ
+    User -->|"Queries procedural workflows, rules<br/>(User Mode / REST)"| StatIQ
+    Admin -->|"Triggers specification & document ingestion<br/>(REST Ingest Endpoint / CI)"| StatIQ
+
+    %% Ingestion Data Flow
+    OpenAPISpecs -->|"Stream ingestion & AST parsing (FR-01)"| StatIQ
+    Regulations -->|"Two-tier Markdown ingestion (FR-02)"| StatIQ
+
+    %% Internal Data Store
+    StatIQ <-->|"ACID transactions: Metadata, tsvector, HNSW embeddings"| Postgres
+
+    %% Generative Orchestration
+    StatIQ -->|"Primary inference prompt (TLS 1.3)"| Gemini
+    StatIQ -.->|"Automated fallback on 429/503/timeout"| Claude
+    Gemini -.->|"Streamed markdown response"| StatIQ
+    Claude -.->|"Fallback streamed markdown response"| StatIQ
