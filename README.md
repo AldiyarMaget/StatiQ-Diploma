@@ -91,8 +91,25 @@ Standard enterprise search tools and generic LLM interfaces fail due to:
 
 ## 🔗 Project Management & Documentation
 
+### Task Tracking & Workflow
 * **Issue Tracker (YouTrack):** [StatIQ Project Board](https://aldiyar.youtrack.cloud/projects/STATIQ) *(Tasks: [Issues List](https://aldiyar.youtrack.cloud/issues/STATIQ))*
-* **Project Documentation (`/docs`):**
+
+### Project Documentation (`/docs`)
+* **Project Initiation & Scope:**
   * [Project Proposal (Markdown)](docs/proposal.md)
   * [Project Proposal (DOCX)](docs/project_proposal.docx)
-  * *(In Progress)*: `docs/interviews.md`, `docs/literature_review.md`, `docs/system_comparison.md`, `docs/tech_comparison.md`, `docs/requirements.md`, `docs/verification_plan.md`
+* **Domain & Empirical Research:**
+  * [Stakeholder Problem Interviews & Empirical Validation](docs/interviews.md)
+  * [Literature Review: RAG, Semantic Routing & API Ingestion](docs/literature_review.md)
+* **Architectural & Comparative Analysis:**
+  * [Architectural Description and Structural Models](docs/architecture.md)
+  * [Existing System Comparison & Gap Analysis](docs/system_comparison.md)
+  * [Architectural Trade-Off Analysis & Technology Comparison](docs/tech_comparison.md)
+* **Specifications & Verification:**
+  * [Software Requirements Specification (SRS) & Verification Protocol](docs/requirements.md)
+
+### Architectural Diagrams (`/diagrams`)
+* **System Context (C4 Level 1):** [PNG](diagrams/system_context.png) | [Source (Mermaid)](diagrams/sources/system_context.mmd)
+* **Component Architecture (C4 Level 2):** [PNG](diagrams/component_diagram.png) | [Source (Mermaid)](diagrams/sources/component_diagram.mmd)
+* **Execution Flow:** [PNG](diagrams/execution_flow.png) | [Source (Mermaid)](diagrams/sources/execution_flow.mmd)
+* **Use Case Model:** [PNG](diagrams/use_case.png) | [Source (Mermaid)](diagrams/sources/use_case.mmd)

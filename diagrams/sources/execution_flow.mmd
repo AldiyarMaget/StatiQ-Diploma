@@ -1,0 +1,10 @@
+flowchart LR
+    Vin(["User Query (Vin)"]) --> S1["1. ChatController<br/>(Payload Validation)"]
+    S1 --> S2["2. LocalIntentRouter<br/>(Vector Anchors + Guards)"]
+    S2 --> S3["3. RetrievalService<br/>(Parallel tsvector + HNSW)"]
+    S3 --> S4["4. RetrievalService<br/>(Reciprocal Rank Fusion)"]
+    S4 --> S5["5. PromptBuilder<br/>(Context Injection & Citations)"]
+    S5 --> S6["6. LLMClientOrchestrator<br/>(Gemini Flash / Claude Fallback)"]
+    S6 --> S7["7. MermaidPostProcessor<br/>(AST Syntax Verification)"]
+    S7 --> S8["8. ChatController<br/>(SSE Chunk Delivery)"]
+    S8 --> Vout(["Client Stream (Vout)"])

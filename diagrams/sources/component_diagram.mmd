@@ -1,0 +1,67 @@
+flowchart TB
+    subgraph ClientTier ["Presentation Tier (Web Client)"]
+        UI["React / Vite Web Client<br/>(Dual Persona View: User / Analyst)"]
+        MermaidRenderer["Mermaid.js Diagram Renderer"]
+        UI --> MermaidRenderer
+    end
+
+    subgraph BackendTier ["Backend Core Engine (Java 21 / Spring Boot 3.2.5)"]
+        subgraph WebLayer ["REST Controllers & Security"]
+            ChatCtrl["ChatController<br/>(SSE Streaming / Mode Validation)"]
+            IngestCtrl["IngestionController<br/>(Uploads & Triggers)"]
+        end
+
+        subgraph IngestionPipeline ["Ingestion & Parsing Subsystem"]
+            SwaggerSplitter["SwaggerSplitter (FR-01)<br/>Two-Pass Streaming AST Parser<br/>Graph Cycle Detection (Visited Stack)"]
+            DocIndexer["DocumentIndexer (FR-02)<br/>Two-Tier Markdown Chunker<br/>(Header Split + WordPiece Bounding)"]
+        end
+
+        subgraph SearchPipeline ["Routing & Retrieval Subsystem"]
+            IntentRouter["LocalIntentRouter (FR-03)<br/>Cosine Proximity on Domain Anchors<br/>+ Disambiguated Keyword Guards"]
+            RetrievalService["RetrievalService (FR-04)<br/>Parallel Search Dispatcher<br/>Hybrid Reciprocal Rank Fusion (RRF)"]
+        end
+
+        subgraph MLRuntime ["In-Process ML Vectorization"]
+            FixedPool["Dedicated Platform ThreadPool<br/>(FixedThreadPool = CPU Cores)"]
+            ONNXEngine["ONNX Runtime (JNI Engine)<br/>E5-Small-v2 Quantized (384D)"]
+            FixedPool --> ONNXEngine
+        end
+
+        subgraph GenLayer ["LLM Orchestration & Generation"]
+            PromptBuilder["PromptBuilder (FR-05, FR-06)<br/>Persona System Prompts & Negative Constraints"]
+            LLMOrchestrator["LLMClientOrchestrator (FR-08)<br/>Gemini Primary + Claude Fallback (Retry Loop)"]
+            PostProcessor["MermaidPostProcessor (FR-07)<br/>AST Graph Syntax Validation"]
+        end
+    end
+
+    subgraph DataTier ["Persistence Tier (PostgreSQL 16)"]
+        PG[(PostgreSQL 16 + pgvector<br/>Table: statiq_embeddings)]
+        HNSWIndex["HNSW Vector Index (384D Cosine)"]
+        GINIndex["GIN Full-Text Inverted Index (tsvector)"]
+        PG --- HNSWIndex
+        PG --- GINIndex
+    end
+
+    %% Connections
+    UI <-->|"HTTP / SSE Streaming"| ChatCtrl
+    UI -->|"Multipart Contract Upload"| IngestCtrl
+
+    IngestCtrl --> SwaggerSplitter
+    IngestCtrl --> DocIndexer
+
+    SwaggerSplitter -->|"Dispatches chunks for embedding"| FixedPool
+    DocIndexer -->|"Dispatches bounded chunks"| FixedPool
+
+    FixedPool -->|"Persists vectorized chunks & relational metadata"| PG
+
+    ChatCtrl --> IntentRouter
+    IntentRouter -->|"Isolated domain intent"| RetrievalService
+    IntentRouter -.->|"Vectorizes prompt"| FixedPool
+
+    RetrievalService <-->|"Hybrid Parallel Query (tsvector + pgvector)"| PG
+    RetrievalService -->|"Top-K Fused Candidates"| PromptBuilder
+
+    ChatCtrl --> PromptBuilder
+    PromptBuilder --> LLMOrchestrator
+    LLMOrchestrator --> PostProcessor
+    PostProcessor -->|"Validated Markdown + Mermaid"| ChatCtrl
