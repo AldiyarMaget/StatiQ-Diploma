@@ -107,6 +107,7 @@ Standard enterprise search tools and generic LLM interfaces fail due to:
   * [Architectural Trade-Off Analysis & Technology Comparison](docs/tech_comparison.md)
 * **Specifications & Verification:**
   * [Software Requirements Specification (SRS) & Verification Protocol](docs/requirements.md)
+  * [UX Design, Interactive Scenarios & Prototype Walkthrough](docs/prototype_ux.md)
 
 ### Architectural Diagrams (`/diagrams`)
 * **System Context (C4 Level 1):** [PNG](diagrams/system_context.png) | [Source (Mermaid)](diagrams/sources/system_context.mmd)
