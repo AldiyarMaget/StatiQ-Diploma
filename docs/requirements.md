@@ -24,6 +24,7 @@ Requirements are prioritized using the MoSCoW framework:
 * **Must Have (M):** Mandatory baseline requirements verified at pre-defense and milestone reviews.
 * **Should Have (S):** Critical architectural capabilities required for enterprise reliability.
 * **Could Have (C):** Non-critical operational enhancements implemented if milestone schedule permits.
+* **Won't Have (W):** Explicitly excluded out-of-scope capabilities (non-goals defined in Section 1.2: write-back API mutations, deep OCR layout reconstruction, and multi-region database clustering) deferred beyond the diploma project scope.
 
 ---
 
