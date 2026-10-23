@@ -8,7 +8,7 @@ Design and Implementation of a Scalable RAG Knowledge Discovery System with Hybr
 *(Individual Project)*
 
 ## 3. Supervisor
-* **Islam Omirzak** PhD Candidate, M.Sc.Ed in Computer Scienc)
+* **Islam Omirzak** (Senior Lecturer / PhD Candidate, M.Sc.Ed in Computer Science)
 
 ---
 

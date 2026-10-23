@@ -70,10 +70,11 @@ The table below contrasts our pre-project engineering assumptions with the empir
 
 ## 4. Traceability to System Requirements
 
-The empirical findings directly justify the following core software requirements for the StatIQ platform:
+The empirical findings directly justify the following core software requirements for the StatIQ platform (formalized in `docs/requirements.md`):
 
-* **FR-01 (Structural OpenAPI Ingestion):** The system must ingest OpenAPI 3.0 contracts preserving endpoint boundaries, HTTP verbs, parameter schemas, and payload hierarchies without arbitrary text slicing.
-* **FR-02 (Hybrid Retrieval Pipeline):** The search architecture must combine lexical keyword retrieval and dense vector proximity search to reliably resolve both exact alphanumeric tokens and natural-language queries.
-* **FR-03 (Semantic Intent Classification):** The system must classify query intent prior to execution to route queries toward appropriate document silos and minimize cross-domain retrieval noise.
-* **FR-04 (Role-Adaptive Presentation):** The user interface must support distinct operational views: a technical mode providing complete schemas and contracts, and a general user mode providing structured guidance.
-* **FR-05 (Deterministic Source Attribution):** Every generated response must provide verifiable citations referencing source document titles and sections.
+* **FR-01 (Two-Pass OpenAPI AST Parsing and Graph Cycle Detection):** The system must ingest OpenAPI 3.0 contracts preserving endpoint boundaries, HTTP verbs, parameter schemas, and payload hierarchies without arbitrary text slicing.
+* **FR-03 (Pre-Retrieval Intent Routing with Ambiguity Disambiguation):** The system must classify query intent prior to execution to route queries toward appropriate document silos and minimize cross-domain retrieval noise.
+* **FR-04 (Hybrid Sparse-Dense Retrieval Execution):** The search architecture must combine lexical keyword retrieval and dense vector proximity search to reliably resolve both exact alphanumeric tokens and natural-language queries.
+* **FR-05 (Grounded Response Generation and Deterministic Refusal):** Every generated response must provide verifiable citations referencing source document titles and sections, deterministically refusing ungrounded inquiries.
+* **FR-06 (Dual-Role Adaptive Output Formatting):** The user interface must support distinct operational views: a technical mode providing complete schemas and contracts, and a general user mode providing structured guidance.
+* **FR-07 (Interactive Workflow & State Diagram Rendering):** The system must detect procedural state lifecycles and render interactive visual workflow graphs for operational troubleshooting.
