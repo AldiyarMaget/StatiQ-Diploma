@@ -100,6 +100,7 @@ Standard enterprise search tools and generic LLM interfaces fail due to:
   * [Project Proposal (DOCX)](docs/project_proposal.docx)
 * **Project Governance & Planning:**
   * [Project Management, Milestone Roadmap & Risk Governance](docs/project_management.md)
+  * [Academic Supervisor Feedback & Continuous Revision Log](docs/supervisor_feedback.md)
 * **Domain & Empirical Research:**
   * [Stakeholder Problem Interviews & Empirical Validation](docs/interviews.md)
   * [Literature Review: RAG, Semantic Routing & API Ingestion](docs/literature_review.md)
